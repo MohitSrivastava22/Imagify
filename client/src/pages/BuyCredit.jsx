@@ -5,12 +5,20 @@ import { motion } from "motion/react"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { use } from 'react'
 
 
 const BuyCredit = () => {
-
+  
   const { user, setShowLogin, backendUrl, loadCreditData, token } = useContext(AppContext)
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     setShowLogin(true);
+  //     navigate('/')
+  //   }
+  // }, [user, setShowLogin, navigate]);
 
 
   const initPay = async(order)=> {

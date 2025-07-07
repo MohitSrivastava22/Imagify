@@ -4,8 +4,8 @@ import 'dotenv/config'
 import connectDB from './config/mongodb.js'
 import userRouter from './routes/userRoutes.js'
 import imageRouter from './routes/imageRoutes.js'
+import User from './models/userModel.js'
 
-const PORT=process.env.PORT || 3000
 const app=express();
 
 app.use(express.json()) // It is middleware in Express.js that parses incoming JSON payloads from the request body.It automatically converts the raw JSON data sent by the client into a JavaScript object and attaches it to req.body, making it easy to access and work with the data in your application. Without this middleware, the req.body for JSON requests would be undefined.
@@ -20,9 +20,25 @@ app.get('/',(req,res)=>{
     res.send("API is Working")
 })
 
-app.listen(PORT,()=>{
-    console.log('Server is running on Port'+PORT)
-})
+const guestUserSetup =async () => {
+    const existUser= await User.findOne({email:'guestUser@gmail.com'})
+    if(!existUser){
+        const guest=await User.create({
+            name: 'Guest User',
+            email: 'guestUser@gmail.com',
+            password: 'guestUser123',
+            creditBalance: 5 // Initial credit balance for the guest user
+        })
+    }
+};  
+ const serverSetup=async()=>{
+    await guestUserSetup();
+     const PORT = process.env.PORT || 3000;
+     app.listen(PORT, () => {
+         console.log('Server is running on Port' + PORT)
+    })
+ }
+serverSetup();
 
 
 

@@ -25,7 +25,6 @@ const registerUser=asyncHandler(async (req,res)=>{
             success:true,
             name:user.name,
             email:user.email,
-            password:user.password,
             creditBalance: user.creditBalance,
             token: generateToken(user._id)
         })
@@ -38,18 +37,18 @@ const registerUser=asyncHandler(async (req,res)=>{
 const loginUser =asyncHandler(async (req,res)=>{
     const {email,password}=req.body
     if(!email||!password){
-        throw new Error("Enter all the details")
+        return res.status(400).json({ success: false, message: "Enter all the details" })
+    
     }
     const user=await User.findOne({email})
     if(!user){
-        throw new Error("User not found")
+        return res.status(400).json({ success: false, message: "User not found" })
     }
     if (await user.matchedPassword(password)){
         res.json({
             success:true,
             name: user.name,
             email: user.email,
-            password: user.password,
             creditBalance: user.creditBalance,
             token:generateToken(user._id)
         })

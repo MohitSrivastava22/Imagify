@@ -12,6 +12,7 @@ const Result = () => {
   const [input, setInput] = useState('')
 
   const { generateImage }=useContext(AppContext)
+  
 
   const onSubmitHandler=async (e)=>{
     e.preventDefault()
