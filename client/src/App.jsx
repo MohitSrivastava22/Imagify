@@ -17,7 +17,7 @@ const App = () => {
   const interactiveRef = useRef(null)
   const descriptionRef = useRef(null)
   const testimonialsRef = useRef(null)
-  const location = useLocation();
+  const location = useLocation();//to get location
   return (
     <>
       {/* <div className='px-4 sm:px-10 lg:px-28 md:px-14 min-h-screen bg-gradient-to-b from-teal-50 to-orange-50'> */}
@@ -45,3 +45,4 @@ const App = () => {
 }
 
 export default App
+
