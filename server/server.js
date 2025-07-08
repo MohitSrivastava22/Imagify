@@ -9,7 +9,12 @@ import User from './models/userModel.js'
 const app=express();
 
 app.use(express.json()) // It is middleware in Express.js that parses incoming JSON payloads from the request body.It automatically converts the raw JSON data sent by the client into a JavaScript object and attaches it to req.body, making it easy to access and work with the data in your application. Without this middleware, the req.body for JSON requests would be undefined.
-app.use(cors())  // It allows your server to handle requests from other origins (domains, ports, or protocols) that are different from the server's origin.
+ // It allows your server to handle requests from other origins (domains, ports, or protocols) that are different from the server's origin.
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: "GET,POST,PUT,DELETE,PATCH,HEAD",
+    credentials: true
+}));
 await connectDB();
 
 app.use('/api/user',userRouter)
