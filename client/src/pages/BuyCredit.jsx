@@ -49,6 +49,10 @@ const BuyCredit = () => {
 }
 
 const paymentRazorpay = async (planId) => {
+  // console.log("Payment initiated for plan:", planId);
+  // console.log("token ",token);
+  
+  
   try {
     if (!user) {
       setShowLogin(true);

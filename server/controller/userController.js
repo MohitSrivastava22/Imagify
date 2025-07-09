@@ -60,7 +60,9 @@ const loginUser =asyncHandler(async (req,res)=>{
 
 
 const userCredit= asyncHandler(async (req,res)=>{
-    const {userId}=req.body
+    const  userId  = req.user._id;
+    console.log("UserID",userId);
+    
     const user=await User.findById(userId)
     if(user){
         res.json({ success: true, credits: user.creditBalance, user: { name: user.name }})
@@ -74,9 +76,13 @@ const razorpayInstance = new razorpay({
 })
 const paymentRazorpay=async (req,res)=>{
     try {
-        const {userId,planId}=req.body
+        // const {userId,planId}=req.body
+        const userId= req.user._id
+        console.log("User ID from token:", userId);
+        
+        const { planId } = req.body
         if (!userId || !planId) {
-            return res.json({ success: false, message: "Enter all the details" });
+            return res.json({ success: false, message: "Enterrr all the details" });
         }
         const userData=await User.findById(userId)  
         if(!userId){

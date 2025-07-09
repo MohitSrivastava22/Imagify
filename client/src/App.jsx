@@ -25,7 +25,7 @@ const App = () => {
 
       <ToastContainer position='bottom-right'/>
       <Navbar interactiveRef={interactiveRef} descriptionRef={descriptionRef} testimonialsRef={testimonialsRef}/>
-        {showLogin && location.pathname !== '/' && <Login />}
+        {/* {showLogin && location.pathname !== '/' && <Login />} */}
         {showLogin && <Login />}
       <Routes>
         <Route path='/' element={

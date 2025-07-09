@@ -13,17 +13,21 @@ const AppContextProvider=(props)=>{
 
     const navigate=useNavigate()
 
-    const backendUrl=import.meta.env.VITE_BACKEND_URL
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const loadCreditData= async ()=>{
+        // console.log("Token", token);
+        
         try {
             const { data } = await axios.get(`${backendUrl}/api/user/credits`, { headers: { Authorization: `Bearer ${token}` }})
-            // console.log(data)
+            console.log(data)
             if(data.success){
                 setCredit(data.credits)                
                 setUser(data.user.name)
             }
         } catch (error) {
+            console.log("Error loading credit data:", error);
+            
             toast.error(error.message)
         }
     }

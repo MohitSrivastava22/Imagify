@@ -46,7 +46,7 @@ const userAuth = expressAsyncHandler(async (req, res, next) => {
 
             req.user = await User.findById(decoded.id).select("-password");
 
-            next();
+            return next();
         } catch (error) {
             res.status(401);
             throw new Error("Not authorized, token failed");

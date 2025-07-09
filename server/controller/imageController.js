@@ -4,9 +4,10 @@ import axios from 'axios'
 
 export const generateImage=async (req,res)=>{
     try {
-        const {userId,prompt} =req.body
-        // console.log('Request Body:', req.body);  // Log the entire body
-        // console.log('Extracted userId:', userId);  // Log the extracted userId
+        const userId = req.user._id;
+        const {prompt} =req.body
+        console.log('Request Body:', req.body);  // Log the entire body
+        console.log('Extracted userId:', userId);  // Log the extracted userId
         const user=await User.findById(userId)
         // console.log(user)
         if(!user||!prompt){
