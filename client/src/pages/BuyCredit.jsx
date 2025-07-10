@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { assets, plans } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
-import { motion } from "motion/react"
+import { motion } from "framer-motion"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -31,7 +31,7 @@ const BuyCredit = () => {
     order_id:order.id,
     receipt:order.receipt,
     handler: async (response)=>{
-      console.log(response);
+      // console.log(response);
       try {
         const { data } = await axios.post(`${backendUrl}/api/user/verify-razor`, response ,{headers:{Authorization: `Bearer ${token}`}})
         if(data.success){

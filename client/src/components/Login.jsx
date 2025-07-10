@@ -48,7 +48,7 @@ function Login() {
 
   
   const guestUserSetup = () => {
-    setEmail('guestUser@gmail.com');
+    setEmail('guestUserr@gmail.com');
     setPassword('guestUser123');
   };
 

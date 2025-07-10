@@ -26,11 +26,11 @@ app.get('/',(req,res)=>{
 })
 
 const guestUserSetup =async () => {
-    const existUser= await User.findOne({email:'guestUser@gmail.com'})
+    const existUser= await User.findOne({email:'guestUserr@gmail.com'})
     if(!existUser){
         const guest=await User.create({
             name: 'Guest User',
-            email: 'guestUser@gmail.com',
+            email: 'guestUserr@gmail.com',
             password: 'guestUser123',
             creditBalance: 5 // Initial credit balance for the guest user
         })

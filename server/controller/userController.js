@@ -61,7 +61,7 @@ const loginUser =asyncHandler(async (req,res)=>{
 
 const userCredit= asyncHandler(async (req,res)=>{
     const  userId  = req.user._id;
-    console.log("UserID",userId);
+    // console.log("UserID",userId);
     
     const user=await User.findById(userId)
     if(user){
@@ -74,17 +74,23 @@ const razorpayInstance = new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID, 
     key_secret: process.env.RAZORPAY_KEY_SECRET
 })
+// console.log("Razorpay Key ID:", process.env.RAZORPAY_KEY_ID);
+// console.log("Razorpay Secret:", process.env.RAZORPAY_KEY_SECRET);
+
+
 const paymentRazorpay=async (req,res)=>{
     try {
         // const {userId,planId}=req.body
         const userId= req.user._id
-        console.log("User ID from token:", userId);
+        // console.log("User ID from token:", userId);
         
         const { planId } = req.body
         if (!userId || !planId) {
             return res.json({ success: false, message: "Enterrr all the details" });
         }
         const userData=await User.findById(userId)  
+        // console.log("User Data:", userData);
+        
         if(!userId){
             return res.json({ success: false, message: "User not found" })
         }
@@ -123,13 +129,23 @@ const paymentRazorpay=async (req,res)=>{
             receipt: newTransaction._id.toString(),
         }
 
-        await razorpayInstance.orders.create(options,(error,order)=>{
-                if(error) {
-                    console.log(error)
-                    res.json({ success: false, message: "error" })
-                }
-                res.json({success:true, order})
-        })
+        // await razorpayInstance.orders.create(options,(error,order)=>{
+        //         if(error) {
+        //             console.log(error)
+        //             res.json({ success: false, message: "error" })
+        //         }
+        //         res.json({success:true, order})
+        // })
+        try {
+            const order = await razorpayInstance.orders.create(options);
+            res.json({ success: true, order });
+        } catch (error) {
+            console.error("Razorpay order creation error:", error); // full error
+            if (error?.error) {
+                console.error("Razorpay API error details:", error.error);
+            }
+            res.json({ success: false, message: "Razorpay order creation failed", error });
+        }
 
 
         
@@ -141,7 +157,7 @@ const paymentRazorpay=async (req,res)=>{
 const verifyRazorpay = async (req,res)=>{
     try {
         const {razorpay_order_id}=req.body
-        const orderInfo = await razorpayInstance.order.fetch(razorpay_order_id)
+        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
         if (orderInfo.status==='paid'){
             const transactionData = await Transaction.findById(orderInfo.receipt)
             if (transactionData.payment){
