@@ -10,11 +10,11 @@ const Home = ({interactiveRef ,descriptionRef,testimonialsRef}) => {
 
   const { setShowLogin } = useContext(AppContext);
   return (
-    <div>
+    <div className="w-full px-2 sm:px-6 md:px-12 lg:px-24">
      <Header/>
-      <div ref={interactiveRef}><Steps /></div>
-      <div ref={descriptionRef}><Description /></div>
-      <div ref={testimonialsRef}><Testimonials /></div>
+      <div ref={interactiveRef} className="my-6"><Steps /></div>
+      <div ref={descriptionRef} className="my-6"><Description /></div>
+      <div ref={testimonialsRef} className="my-6"><Testimonials /></div>
      <GenerateBtn/>
     </div>
   )
